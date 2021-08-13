@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "We are now running 'yarn build' on every commit. You can skip this with the '--no-verify' flag (but please don't)."
+
+yarn build

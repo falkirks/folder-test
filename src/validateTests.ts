@@ -28,13 +28,18 @@ function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>
 }
 
 function validateTests<I, O, E>(maybeTests: Array<{ filename: string }>, options: TestFolderOptions<I, O, E>): maybeTests is Array<TestFolderSchemaWithFilename<I, O, E>> {
+    let badTests = 0;
     for (const maybeTest of maybeTests) {
         try {
             validateTest(maybeTest, options);
         } catch (err) {
-            Log.error(`${maybeTest.filename} does not conform to the test schema.`);
-            throw new Error(`In ${maybeTest.filename} ${err.message}`);
+            Log.error(`${maybeTest.filename} does not conform to the test schema. (${err.message})`);
+            badTests++;
         }
+    }
+    if (badTests > 0) {
+        const subject = badTests === 1 ? "test" : "tests";
+        throw new Error(`${badTests} ${subject} did not conform to the test schema.`);
     }
     return true;
 }

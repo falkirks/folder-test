@@ -3,7 +3,7 @@ import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
 import {expect} from "chai";
 import {joinWithDefaultOptions} from "./joinWithDefaultOptions";
 import {readTestsFromDisk} from "./readTestsFromDisk";
-import {validateTests} from "./validateTest";
+import {validateTests} from "./validateTests";
 
 export function testFolder<I, O, E>(suiteName: string,
                                     target: (input: I) => O | PromiseLike<O>,

@@ -1,6 +1,9 @@
-export interface TestFolderOptions<O, E> {
-    assertOnResult?: (expected: any, actual: any) => void; // expected and actual are either O or if O = Promise<F> they will be F
-    assertOnError?: (expected: any, actual: any) => void;
+export interface TestFolderOptions<I, O, E> {
+    assertOnResult: (expected: O, actual: any) => void; // expected and actual are either O or if O = Promise<F> they will be F
+    assertOnError: (expected: E, actual: any) => void;
+    inputValidator?: (input: any) => input is I;
+    outputValidator?: (output: any) => output is O;
+    errorValidator?: (error: any) => error is E;
 }
 
 export interface TestFolderSchema<I, O, E> {
@@ -10,7 +13,6 @@ export interface TestFolderSchema<I, O, E> {
     errorExpected?: boolean;
     with?: O | E; // if an error is expected this MUST be E otherwise it must be O
 }
-
 
 export interface TestFolderSchemaWithFilename<I, O, E> extends TestFolderSchema<I, O, E> {
     filename: string;

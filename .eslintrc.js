@@ -21,7 +21,7 @@ module.exports = {
             }
         },
         {
-            "files": ["src/Util.ts"],
+            "files": ["src/Log.ts"],
             "rules": {
                 "no-console": "off"
             }

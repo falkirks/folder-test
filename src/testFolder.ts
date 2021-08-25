@@ -7,9 +7,9 @@ import {validateTests} from "./validateTests";
 import {ITest} from "mocha";
 
 function testFolder<I, O, E>(suiteName: string,
-                                    target: (input: I) => O | PromiseLike<O>,
-                                    folder: string,
-                                    options: Partial<TestFolderOptions<I, O, E>> = {}): ITest {
+                             target: (input: I) => O | PromiseLike<O>,
+                             folder: string,
+                             options: Partial<TestFolderOptions<I, O, E>> = {}): ITest {
 
     const mergedOptions = joinWithDefaultOptions(options);
     let tests: Array<TestFolderSchemaWithFilename<I, O, E>>;
@@ -35,14 +35,14 @@ function testFolder<I, O, E>(suiteName: string,
                             // if we want an error just reject again
                             return Promise.reject(new Error(`Expected an error but instead resolved or returned with ${result}`));
                         } else if (test.with !== undefined) {
-                            mergedOptions.assertOnResult(test.with as O, result);
+                            return mergedOptions.assertOnResult(test.with as O, result);
                         }
                     } catch (err) {
                         if (!test.errorExpected) {
                             // if we don't want an error just rethrow
                             throw err;
                         } else if (test.with !== undefined) {
-                            mergedOptions.assertOnError(test.with as E, err);
+                            return mergedOptions.assertOnError(test.with as E, err);
                         }
                     }
                 });

@@ -1,12 +1,12 @@
 import {expect} from "chai";
 import {TestFolderOptions} from "./types";
 
-function assertOnResult<O>(expected: O, actual: any): Chai.Assertion {
-    return expect(actual).to.deep.equal(expected);
+function assertOnResult<O>(expected: O, actual: any): void {
+    expect(actual).to.deep.equal(expected);
 }
 
-function assertOnError<E>(expected: E, actual: any): Chai.Assertion {
-    return expect(actual).to.deep.equal(expected);
+function assertOnError<E>(expected: E, actual: any): void {
+    expect(actual).to.deep.equal(expected);
 }
 
 function getDefaultOptions<I, O, E>(): TestFolderOptions<I, O, E> {

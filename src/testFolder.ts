@@ -6,9 +6,9 @@ import {readTestsFromDisk} from "./readTestsFromDisk";
 import {validateTests} from "./validateTests";
 import {ITest} from "mocha";
 
-export function testFolder<I, O, E>(suiteName: string,
+function testFolder<I, O, E>(suiteName: string,
                                     target: (input: I) => O | PromiseLike<O>,
-                                    folder= "", // TODO is this right??
+                                    folder: string,
                                     options: Partial<TestFolderOptions<I, O, E>> = {}): ITest {
 
     const mergedOptions = joinWithDefaultOptions(options);
@@ -50,3 +50,5 @@ export function testFolder<I, O, E>(suiteName: string,
         });
     });
 }
+
+export {testFolder};

@@ -11,7 +11,7 @@ function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>
     if (typeof content.input === "undefined") { // we don't validate input type
         throw new Error("required property input is missing.");
     }
-    if (typeof content.errorExpected !== "boolean") {
+    if (typeof content.errorExpected !== "undefined" && typeof content.errorExpected !== "boolean") {
         throw new Error("optional property errorExpected is not a boolean.");
     }
     if (options.inputValidator && !options.inputValidator(content.input)) {

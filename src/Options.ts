@@ -24,5 +24,6 @@ function joinWithDefaultOptions<I, O, E>(provided: Partial<TestFolderOptions<I, 
 }
 
 export {
+    getDefaultOptions,
     joinWithDefaultOptions,
 };

@@ -1,7 +1,7 @@
 import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
 
 import {expect} from "chai";
-import {joinWithDefaultOptions} from "./joinWithDefaultOptions";
+import {joinWithDefaultOptions} from "./Options";
 import {readTestsFromDisk} from "./readTestsFromDisk";
 import {validateTests} from "./validateTests";
 import {ITest} from "mocha";

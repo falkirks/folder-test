@@ -66,8 +66,7 @@ function readTestsFromDisk<I, O, E>(path: string): Array<{filename: string}> {
 
         try {
             const test = JSON.parse(content.toString());
-            // TODO is this right?
-            test.filename = file.replace("folder", ""); // dont show absolute paths
+            test.filename = file.replace(`${path}/`, ""); // dont show absolute paths
             testsLoaded.push(test);
         } catch (err) {
             Log.error(`${methodName} ${file} could not be read and parsed.`);

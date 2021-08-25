@@ -4,16 +4,17 @@ import {expect} from "chai";
 import {joinWithDefaultOptions} from "./joinWithDefaultOptions";
 import {readTestsFromDisk} from "./readTestsFromDisk";
 import {validateTests} from "./validateTests";
+import {ITest} from "mocha";
 
 export function testFolder<I, O, E>(suiteName: string,
                                     target: (input: I) => O | PromiseLike<O>,
-                                    folder: string = "", // TODO is this right??
-                                    options: Partial<TestFolderOptions<I, O, E>> = {}) {
+                                    folder= "", // TODO is this right??
+                                    options: Partial<TestFolderOptions<I, O, E>> = {}): ITest {
 
     const mergedOptions = joinWithDefaultOptions(options);
     let tests: Array<TestFolderSchemaWithFilename<I, O, E>>;
     try {
-        const maybeTests = readTestsFromDisk(folder, mergedOptions);
+        const maybeTests = readTestsFromDisk(folder);
         if (validateTests(maybeTests, mergedOptions)) {
             tests = maybeTests;
         }
@@ -23,7 +24,7 @@ export function testFolder<I, O, E>(suiteName: string,
 
     // Dynamically create and run a test for each query in testQueries
     // Creates an extra "test" called "Should run dynamic tests" as a byproduct. Don't worry about it
-    it("Should run dynamic tests", function () {
+    return it("Should run dynamic tests", function () {
         describe(suiteName, function () {
             for (const test of tests) {
                 it(`[${test.filename}] ${test.title}`, async function () {

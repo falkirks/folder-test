@@ -1,14 +1,46 @@
-import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
+import {TestFolderSchemaWithFilename} from "./types";
 import Log from "./Log";
 import * as fs from "fs-extra";
+
+function attemptDirRead(currentPath: string): string[] {
+    try {
+        return fs.readdirSync(currentPath);
+    } catch (err) {
+        Log.error(`Error reading directory ${currentPath}`);
+        throw err;
+    }
+}
+
+// From https://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
+function isDirectory(path: string): boolean {
+    try {
+        const stat = fs.lstatSync(path);
+        return stat.isDirectory();
+    } catch (e) {
+        return false;
+    }
+}
+
+function readAllFiles(currentPath: string): string[] {
+    let filePaths: string[] = [];
+    const filesInDir = attemptDirRead(currentPath);
+    for (const fileOrDirName of filesInDir) {
+        const fullPath = `${currentPath}/${fileOrDirName}`;
+        if (isDirectory(fullPath)) {
+            filePaths = filePaths.concat(readAllFiles(fullPath));
+        } else if (fileOrDirName.endsWith(".json")) {
+            filePaths.push(fullPath);
+        }
+    }
+    return filePaths;
+}
 
 /**
  * Recursively searches for test query JSON files in the path and returns those matching the specified schema.
  * @param path The path to the sample query JSON files.
- * @param options
  */
-function readTestsFromDisk<I, O, E>(path: string, options: TestFolderOptions<I, O, E>): Array<{filename: string}> {
-    const methodName: string = "TestUtil::readTests --";
+function readTestsFromDisk<I, O, E>(path: string): Array<{filename: string}> {
+    const methodName = "TestUtil::readTests --";
     const testsLoaded: Array<TestFolderSchemaWithFilename<I, O, E>> = [];
     let files: string[];
 
@@ -44,39 +76,6 @@ function readTestsFromDisk<I, O, E>(path: string, options: TestFolderOptions<I, 
     }
 
     return testsLoaded;
-}
-
-function readAllFiles(currentPath: string): string[] {
-    let filePaths: string[] = [];
-    const filesInDir = attemptDirRead(currentPath);
-    for (const fileOrDirName of filesInDir) {
-        const fullPath = `${currentPath}/${fileOrDirName}`;
-        if (isDirectory(fullPath)) {
-            filePaths = filePaths.concat(readAllFiles(fullPath));
-        } else if (fileOrDirName.endsWith(".json")) {
-            filePaths.push(fullPath);
-        }
-    }
-    return filePaths;
-}
-
-function attemptDirRead(currentPath: string): string[] {
-    try {
-        return fs.readdirSync(currentPath);
-    } catch (err) {
-        Log.error(`Error reading directory ${currentPath}`);
-        throw err;
-    }
-}
-
-// From https://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
-function isDirectory(path: string) {
-    try {
-        const stat = fs.lstatSync(path);
-        return stat.isDirectory();
-    } catch (e) {
-        return false;
-    }
 }
 
 export {readTestsFromDisk};

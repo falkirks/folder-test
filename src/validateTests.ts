@@ -1,23 +1,23 @@
 import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
 import Log from "./Log";
 
-function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>) {
-    if (!content.hasOwnProperty("title") && typeof content["title"] !== "string") {
+function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>): void {
+    if (typeof content.title !== "string") {
         throw new Error("required property title is missing or is not a string.");
     }
-    if (!content.hasOwnProperty("desc") && typeof content["desc"] !== "string") {
+    if (typeof content.desc !== "string") {
         throw new Error("required property desc is missing or is not a string.");
     }
-    if (!content.hasOwnProperty("input")) { // we don't validate input type
+    if (typeof content.input === "undefined") { // we don't validate input type
         throw new Error("required property input is missing.");
     }
-    if (content.hasOwnProperty("errorExpected") && typeof content["errorExpected"] !== "boolean") {
+    if (typeof content.errorExpected !== "boolean") {
         throw new Error("optional property errorExpected is not a boolean.");
     }
     if (options.inputValidator && !options.inputValidator(content.input)) {
         throw new Error("input is not valid.");
     }
-    if (content.hasOwnProperty("with")) {
+    if (typeof content.with !== "undefined") {
         if (options.outputValidator && !content.errorExpected && !options.outputValidator(content.with)) {
             throw new Error("output is not valid.");
         }

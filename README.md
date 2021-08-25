@@ -1,36 +1,87 @@
-# CPSC 310 Project Repository
+# Folder Test
 
-This repository contains starter code for the class project.
-Please keep your repository private.
+## Example
 
-For information about the project, autotest, and the checkpoints, see the [course webpage](https://sites.google.com/view/ubc-cpsc310-20w2-intro-to-se).
+```typescript
+import {testFolder} from "test-folder";
 
-## Configuring your environment
+type Input = string
+type Output = number
+type Error = "RedError" | "YellowError"
 
-To start using this project, you need to get your computer configured so you can build and execute the code.
-To do this, follow these steps; the specifics of each step (especially the first two) will vary based on which operating system your computer has:
+describe("Dynamic folder test", function () {
+    before(function () {
+        // Called before any of the tests are run
+    });
 
-1. [Install git](https://git-scm.com/downloads) (v2.X). After installing you should be able to execute `git --version` on the command line.
+    // `after` is also called before the tests are run, but after the `before`
+    // `beforeEach` and `afterEach` do not work as expected
 
-1. [Install Node LTS](https://nodejs.org/en/download/) (v14.15.X), which will also install NPM (you should be able to execute `node --version` and `npm --version` on the command line).
+    testFolder<Input, Output, Error>(
+        "Suite Name",
+        (input: Input): Output => codeUnderTest(input),
+        "./test/resources/json-spec",
+        options
+    );
+});
+```
 
-1. [Install Yarn](https://yarnpkg.com/en/docs/install) (v1.22+). You should be able to execute `yarn --version` afterwards.
+## API
+```typescript
+/**
+ * The main function!
+ * @param suiteName Name of the mocha describe that will be created 
+ * @param target A function that invokes the code under test
+ * @param path A path where the json schemata are
+ * @param options Described below
+ */
+function testFolder<I, O, E>(suiteName: string, target: (input: I) => O, path: string, options: Options) {
+    // ...
+}
 
-1. Clone your repository by running `git clone REPO_URL` from the command line. You can get the REPO_URL by clicking on the green button on your project repository page on GitHub. Note that due to new department changes you can no longer access private git resources using https and a username and password. You will need to use either [an access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) or [SSH](https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account).
+interface Options {
+    // The function that will be called on the result of the code under test
+    // if errorExpected is false and the code under test does not throw
+    //  if absent, defaults to `expect(actual).to.deep.equal(expected)`
+    assertOnResult?: (expected: O, actual: any) => void | PromiseLike<void>;
 
-## Project commands
+    // The function that will be called on the result of the code under test
+    // if errorExpected is true and the code under test throws
+    //  if absent, defaults to `expect(actual).to.deep.equal(expected)`
+    assertOnError?: (expected: E, actual: any) => void | PromiseLike<void>;
 
-Once your environment is configured you need to further prepare the project's tooling and dependencies.
-In the project folder:
+    // Called on the JSON files to ensure that the inputs are "correct" as specified this function
+    //  if absent, the inputs are not validated
+    inputValidator?: (input: any) => input is I;
 
-1. `yarn install` to download the packages specified in your project's *package.json* to the *node_modules* directory.
+    // Called on the JSON files to ensure that the outputs are "correct" as specified this function
+    //  if absent, the outputs are not validated
+    outputValidator?: (output: any) => output is O;
 
-1. `yarn build` to compile your project. You must run this command after making changes to your TypeScript files.
+    // Called on the JSON files to ensure that the errors are "correct" as specified this function
+    //  if absent, the errors are not validated
+    errorValidator?: (error: any) => error is E;
+}
 
-1. `yarn test` to run the test suite.
+/**
+ * The schema of the JSON that folder-test will read in the provided directory
+ */
+interface Test {
+    // The name of the test
+    title: string;
 
-1. `yarn pretty` to prettify your project code.
+    // A description of the test
+    desc: string;
 
-## Running and testing from an IDE
+    // The input provided to the code under test
+    input: I;
 
-WebStorm should be automatically configured the first time you open the project (WebStorm is a free download through their students program)
+    // Whether or not the code under test is expected to throw an error
+    //  defaults to false
+    errorExpected?: boolean;
+
+    // The value that code under test must equal
+    //  if absent, will only test that the code under test does/doesn't throw an error
+    with?: O | E;
+}
+```

@@ -2,9 +2,14 @@
     "name": "folder-test",
     "description": "Load many tests from a folder",
     "homepage": "https://github.com/falkirks/folder-test",
-    "author": "",
+    "contributors": [
+        "Noa Heyl",
+        "Braxton Hall"
+    ],
     "license": "GPL-3.0",
     "version": "1.0.0",
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
     "engines": {
         "node": ">= 14 < 15"
     },

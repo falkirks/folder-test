@@ -3,6 +3,7 @@
         "outDir": "build",
         "allowJs": false,
         "allowSyntheticDefaultImports": true,
+        "declaration": true,
         "downlevelIteration": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
@@ -11,6 +12,7 @@
         "moduleResolution": "node",
         "noImplicitAny": false,
         "resolveJsonModule": true,
+        "rootDir": "src",
         "skipLibCheck": true,
         "strict": false,
         "target": "es5",
@@ -26,10 +28,10 @@
         ]
     },
     "include": [
-        "src/**/*.ts",
-        "test/**/*.ts"
+        "src/**/*.ts"
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "test/**/*.ts"
     ]
 }

@@ -70,9 +70,6 @@ interface Test {
     // The name of the test
     title: string;
 
-    // A description of the test
-    desc: string;
-
     // The input provided to the code under test
     input: I;
 

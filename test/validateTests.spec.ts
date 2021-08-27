@@ -5,7 +5,6 @@ import {expect} from "chai";
 
 describe("Test schema validation", function () {
     const baseTest: TestFolderSchemaWithFilename<string, number, false> = {
-        desc: "for testing test",
         input: "input",
         title: "test",
         filename: "test.json",
@@ -61,12 +60,6 @@ describe("Test schema validation", function () {
         }).to.throw;
     });
 
-    it("should error on missing desc", function () {
-        expect(() => {
-            validateTests([omitKey(baseTest, "desc")], getDefaultOptions());
-        }).to.throw;
-    });
-
     it("should error on missing input", function () {
         expect(() => {
             validateTests([omitKey(baseTest, "input")], getDefaultOptions());
@@ -102,7 +95,7 @@ describe("Test schema validation", function () {
 
     it("should error given one good test and one bad test", function () {
         expect(() => {
-            validateTests([baseTest, omitKey(baseTest, "desc")], getDefaultOptions());
+            validateTests([baseTest, omitKey(baseTest, "title")], getDefaultOptions());
         }).to.throw;
     });
 });

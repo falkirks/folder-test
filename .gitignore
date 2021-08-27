@@ -8,13 +8,7 @@
 node_modules/
 coverage/
 
-src/*.js
-src/*.map
-src/**/*.js
-src/**/*.map
-test/*.js
-test/*.map
-./data/
+build/
 
 .DS_Store
 .env

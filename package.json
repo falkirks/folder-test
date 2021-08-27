@@ -1,5 +1,5 @@
 {
-    "name": "folder-test",
+    "name": "@ubccpsc310/folder-test",
     "description": "Load many tests from a folder",
     "homepage": "https://github.com/falkirks/folder-test",
     "contributors": [

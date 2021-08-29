@@ -5,9 +5,6 @@ function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>
     if (typeof content.title !== "string") {
         throw new Error("required property title is missing or is not a string.");
     }
-    if (typeof content.desc !== "string") {
-        throw new Error("required property desc is missing or is not a string.");
-    }
     if (typeof content.input === "undefined") { // we don't validate input type
         throw new Error("required property input is missing.");
     }

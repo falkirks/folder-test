@@ -8,7 +8,6 @@ export interface TestFolderOptions<I, O, E> {
 
 export interface TestFolderSchema<I, O, E> {
     title: string;
-    desc: string;
     input: I;
     errorExpected?: boolean;
     with?: O | E; // if an error is expected this MUST be E otherwise it must be O

@@ -3,11 +3,11 @@
 ## Example
 
 ```typescript
-import {testFolder} from "test-folder";
+import {testFolder} from "@ubccpsc310/folder-test";
 
-type Input = string
-type Output = number
-type Error = "RedError" | "YellowError"
+type Input = string;
+type Output = number;
+type Error = "RedError" | "YellowError";
 
 describe("Dynamic folder test", function () {
     before(function () {
@@ -69,9 +69,6 @@ interface Options {
 interface Test {
     // The name of the test
     title: string;
-
-    // A description of the test
-    desc: string;
 
     // The input provided to the code under test
     input: I;

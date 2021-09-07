@@ -14,8 +14,9 @@ describe("Dynamic folder test", function () {
         // Called before any of the tests are run
     });
 
-    // `after` is also called before the tests are run, but after the `before`
-    // `beforeEach` and `afterEach` do not work as expected
+    beforeEach(function () {
+        // Called before each test is run
+    });
 
     testFolder<Input, Output, Error>(
         "Suite Name",

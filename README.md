@@ -1,11 +1,39 @@
 # Folder Test
 
+## Installation
+
+```console
+$ yarn add --dev @ubccpsc310/folder-test
+```
+
 ## Example
 
+### Code under test
 ```typescript
+/**
+ * Converts a colour in RGB to a number
+ * @param rgb An object with r, g, b properties
+ * @throws RedError if colour is red
+ * @throws YellowError if colour is yellow
+ */
+function rgbToNum(rgb: { r: number, g: number, b: number }): number {
+    const num = (rgb.r << 16) + (rgb.g << 8) + rgb.b;
+    if (num === 0xFF000) {
+        throw new RedError();
+    } else if (num === 0xFFFF00) {
+        throw new YellowError();
+    } else {
+        return num;
+    }
+}
+```
+
+### Dynamic folder test
+```typescript
+import { expect } from 'chai'
 import {testFolder} from "@ubccpsc310/folder-test";
 
-type Input = string;
+type Input = { r: number, g: number, b: number };
 type Output = number;
 type Error = "RedError" | "YellowError";
 
@@ -17,14 +45,61 @@ describe("Dynamic folder test", function () {
     beforeEach(function () {
         // Called before each test is run
     });
+    
+    // Assert value equals expected
+    function assertResult(expected: Output, actual: any): void {
+        expect(actual).to.equal(expected);
+    }
+
+    // Assert actual error is of expected type
+    function assertError(expected: Error, actual: any): void {
+        if (expected === "RedError") {
+            expect(actual).to.be.an.instanceOf(RedError);
+        } else {
+            expect(actual).to.be.an.instanceOf(YellowError);
+        }
+    }
 
     testFolder<Input, Output, Error>(
-        "Suite Name",
-        (input: Input): Output => codeUnderTest(input),
-        "./test/resources/json-spec",
-        options
+        "rgbToNum tests",                               // suiteName
+        (input: Input): Output => rgbToNum(input),      // target
+        "./test/resources/json-spec",                   // path
+        {
+            assertOnResult: assertResult,
+            assertOnError: assertError,                 // options
+        }
     );
 });
+```
+
+### ./test/resources/json-spec
+
+Assert result
+```json
+{
+  "title": "black",
+  "input": {
+    "r": 0,
+    "g": 0,
+    "b": 0
+  },
+  "errorExpected": false,
+  "with": 0
+}
+```
+
+Assert error
+```json
+{
+  "title": "yellow",
+  "input": {
+    "r": 225,
+    "g": 225,
+    "b": 0
+  },
+  "errorExpected": true,
+  "with": "YellowError"
+}
 ```
 
 ## API
@@ -32,11 +107,13 @@ describe("Dynamic folder test", function () {
 /**
  * The main function!
  * @param suiteName Name of the mocha describe that will be created 
- * @param target A function that invokes the code under test
+ * @param target A function that invokes the code under test and returns the result
+ *          or a promise that resolves to the result
+ *          if target returns a promise, it is resolved before the result is passed to `assertOnResult` function
  * @param path A path where the json schemata are
  * @param options Described below
  */
-function testFolder<I, O, E>(suiteName: string, target: (input: I) => O, path: string, options: Options) {
+function testFolder<I, O, E>(suiteName: string, target: (input: I) => O | PromiseLike<O>, path: string, options: Options) {
     // ...
 }
 
@@ -67,7 +144,7 @@ interface Options {
 /**
  * The schema of the JSON that folder-test will read in the provided directory
  */
-interface Test {
+interface TestFolderSchema<I, O, E> {
     // The name of the test
     title: string;
 

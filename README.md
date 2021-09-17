@@ -121,12 +121,12 @@ interface Options {
     // The function that will be called on the result of the code under test
     // if errorExpected is false and the code under test does not throw
     //  if absent, defaults to `expect(actual).to.deep.equal(expected)`
-    assertOnResult?: (expected: O, actual: any) => void | PromiseLike<void>;
+    assertOnResult?: (expected: O, actual: any, input: I) => void | PromiseLike<void>;
 
     // The function that will be called on the result of the code under test
     // if errorExpected is true and the code under test throws
     //  if absent, defaults to `expect(actual).to.deep.equal(expected)`
-    assertOnError?: (expected: E, actual: any) => void | PromiseLike<void>;
+    assertOnError?: (expected: E, actual: any, input: I) => void | PromiseLike<void>;
 
     // Called on the JSON files to ensure that the inputs are "correct" as specified this function
     //  if absent, the inputs are not validated

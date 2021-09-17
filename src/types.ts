@@ -1,5 +1,5 @@
 export interface TestFolderOptions<I, O, E> {
-    assertOnResult: (expected: O, actual: any, input: I) => void | PromiseLike<void>; // expected and actual are either O or if O = Promise<F> they will be F
+    assertOnResult: (expected: O, actual: any, input: I) => void | PromiseLike<void>;
     assertOnError: (expected: E, actual: any, input: I) => void | PromiseLike<void>;
     inputValidator?: (input: any) => input is I;
     outputValidator?: (output: any) => output is O;

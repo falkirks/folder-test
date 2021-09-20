@@ -10,6 +10,7 @@ export interface TestFolderSchema<I, O, E> {
     title: string;
     input: I;
     errorExpected?: boolean;
+    verbose?: boolean;
     with?: O | E; // if an error is expected this MUST be E otherwise it must be O
 }
 

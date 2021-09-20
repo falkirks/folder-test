@@ -155,6 +155,10 @@ interface TestFolderSchema<I, O, E> {
     //  defaults to false
     errorExpected?: boolean;
 
+    // Whether or not error messages should include results
+    //  defaults to false
+    verbose?: boolean;
+
     // The value that code under test must equal
     //  if absent, will only test that the code under test does/doesn't throw an error
     with?: O | E;

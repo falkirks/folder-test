@@ -99,15 +99,15 @@ describe("Test schema validation", function () {
         }).to.throw;
     });
 
-    it("should error given an extraneous key", function () {
+    it("should error given an extraneous key if check is enabled", function () {
         expect(() => {
             const test = {...baseTest, foo: "bar"};
-            validateTests([test], getDefaultOptions());
+            validateTests([test], joinWithDefaultOptions({checkForExcessKeys: true}));
         }).to.throw;
     });
 
     it("should not error given an extraneous key if check is disabled", function () {
         const test = {...baseTest, foo: "bar"};
-        validateTests([test], joinWithDefaultOptions({checkForExcessKeys: false}));
+        validateTests([test], getDefaultOptions());
     });
 });

@@ -7,7 +7,7 @@
         "Braxton Hall"
     ],
     "license": "GPL-3.0",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "engines": {

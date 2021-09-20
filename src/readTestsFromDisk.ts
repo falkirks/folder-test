@@ -40,7 +40,7 @@ function readAllFiles(currentPath: string): string[] {
  * @param path The path to the sample query JSON files.
  */
 function readTestsFromDisk<I, O, E>(path: string): Array<{filename: string}> {
-    const methodName = "TestUtil::readTests --";
+    const methodName = "readTestsFromDisk() --";
     const testsLoaded: Array<TestFolderSchemaWithFilename<I, O, E>> = [];
     let files: string[];
 

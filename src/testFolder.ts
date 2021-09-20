@@ -31,7 +31,8 @@ function testFolder<I, O, E>(suiteName: string,
                     const result = await target(test.input);
                     if (test.errorExpected) {
                         // if we want an error just reject again
-                        return Promise.reject(new Error(`Expected an error but instead resolved or returned with ${result}`));
+                        const supplement = test.verbose ? ` with ${result}` : "";
+                        return Promise.reject(new Error(`Expected an error but instead resolved or returned${supplement}`));
                     } else if (test.with !== undefined) {
                         return mergedOptions.assertOnResult(test.with as O, result, test.input);
                     }

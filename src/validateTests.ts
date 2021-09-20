@@ -11,6 +11,9 @@ function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>
     if (typeof content.errorExpected !== "undefined" && typeof content.errorExpected !== "boolean") {
         throw new Error("optional property errorExpected is not a boolean.");
     }
+    if (typeof content.verbose !== "undefined" && typeof content.verbose !== "boolean") {
+        throw new Error("optional property verbose is not a boolean.");
+    }
     if (options.inputValidator && !options.inputValidator(content.input)) {
         throw new Error("input is not valid.");
     }

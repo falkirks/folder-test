@@ -1,6 +1,8 @@
 import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
 import Log from "./Log";
 
+const legalKeys = new Set(["title", "input", "errorExpected", "verbose", "with", "filename"]);
+
 function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>): void {
     if (typeof content.title !== "string") {
         throw new Error("required property title is missing or is not a string.");
@@ -11,6 +13,9 @@ function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>
     if (typeof content.errorExpected !== "undefined" && typeof content.errorExpected !== "boolean") {
         throw new Error("optional property errorExpected is not a boolean.");
     }
+    if (typeof content.verbose !== "undefined" && typeof content.verbose !== "boolean") {
+        throw new Error("optional property verbose is not a boolean.");
+    }
     if (options.inputValidator && !options.inputValidator(content.input)) {
         throw new Error("input is not valid.");
     }
@@ -20,6 +25,13 @@ function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>
         }
         if (options.errorValidator && content.errorExpected && !options.errorValidator(content.with)) {
             throw new Error("error is not valid.");
+        }
+    }
+    if (options.checkForExcessKeys) {
+        for (const key in content) {
+            if (!legalKeys.has(key)) {
+                throw new Error(`extraneous key "${key}" is not valid`);
+            }
         }
     }
 }

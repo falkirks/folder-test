@@ -139,6 +139,11 @@ interface Options {
     // Called on the JSON files to ensure that the errors are "correct" as specified this function
     //  if absent, the errors are not validated
     errorValidator?: (error: any) => error is E;
+
+    // Whether or not to check the JSON for extraneous keys
+    // Useful if you are prone to typos
+    //  defaults to false
+    checkForExcessKeys?: boolean;
 }
 
 /**
@@ -154,6 +159,10 @@ interface TestFolderSchema<I, O, E> {
     // Whether or not the code under test is expected to throw an error
     //  defaults to false
     errorExpected?: boolean;
+
+    // Whether or not error messages should include results
+    //  defaults to false
+    verbose?: boolean;
 
     // The value that code under test must equal
     //  if absent, will only test that the code under test does/doesn't throw an error

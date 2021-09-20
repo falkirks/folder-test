@@ -139,6 +139,11 @@ interface Options {
     // Called on the JSON files to ensure that the errors are "correct" as specified this function
     //  if absent, the errors are not validated
     errorValidator?: (error: any) => error is E;
+
+    // Whether or not to check the JSON for extraneous keys
+    // Useful if you are prone to typos
+    //  defaults to true
+    checkForExcessKeys?: boolean;
 }
 
 /**

@@ -106,12 +106,12 @@ Assert error
 ```typescript
 /**
  * The main function!
- * @param suiteName Name of the mocha describe that will be created 
- * @param target A function that invokes the code under test and returns the result
+ * @param suiteName - Name of the mocha describe that will be created 
+ * @param target - A function that invokes the code under test and returns the result
  *          or a promise that resolves to the result
  *          if target returns a promise, it is resolved before the result is passed to `assertOnResult` function
- * @param path A path where the json schemata are
- * @param options Described below
+ * @param path - A path where the json schemata are located (includes json schemata in subdirectories)
+ * @param options - Described below
  */
 function testFolder<I, O, E>(suiteName: string, target: (input: I) => O | PromiseLike<O>, path: string, options: Options) {
     // ...

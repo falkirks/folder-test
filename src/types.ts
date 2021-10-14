@@ -3,7 +3,7 @@ export interface TestFolderOptions<I, O, E> {
     assertOnError: (expected: E, actual: any, input: I) => void | PromiseLike<void>;
     checkForExcessKeys: boolean;
     inputValidator?: (input: any) => input is I;
-    outputValidator?: (output: any) => output is O;
+    outputValidator?: (output: any) => output is Awaited<O>;
     errorValidator?: (error: any) => error is E;
 }
 

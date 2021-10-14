@@ -108,12 +108,11 @@ Assert error
  * The main function!
  * @param suiteName - Name of the mocha describe that will be created 
  * @param target - A function that invokes the code under test and returns the result
- *          or a promise that resolves to the result
  *          if target returns a promise, it is resolved before the result is passed to `assertOnResult` function
  * @param path - A path where the json schemata are located (includes json schemata in subdirectories)
  * @param options - Described below
  */
-function testFolder<I, O, E>(suiteName: string, target: (input: I) => O | PromiseLike<O>, path: string, options: Options) {
+function testFolder<I, O, E>(suiteName: string, target: (input: I) => O, path: string, options: Options) {
     // ...
 }
 
@@ -121,7 +120,7 @@ interface Options {
     // The function that will be called on the result of the code under test
     // if errorExpected is false and the code under test does not throw
     //  if absent, defaults to `expect(actual).to.deep.equal(expected)`
-    assertOnResult?: (expected: O, actual: any, input: I) => void | PromiseLike<void>;
+    assertOnResult?: (expected: Awaited<O>, actual: any, input: I) => void | PromiseLike<void>;
 
     // The function that will be called on the result of the code under test
     // if errorExpected is true and the code under test throws

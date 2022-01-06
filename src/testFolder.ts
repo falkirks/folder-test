@@ -4,12 +4,12 @@ import {expect} from "chai";
 import {joinWithDefaultOptions} from "./Options";
 import {readTestsFromDisk} from "./readTestsFromDisk";
 import {validateTests} from "./validateTests";
-import {ISuite} from "mocha";
+import {Suite} from "mocha";
 
 function testFolder<I, O, E>(suiteName: string,
                              target: (input: I) => O,
                              folder: string,
-                             options: Partial<TestFolderOptions<I, O, E>> = {}): ISuite {
+                             options: Partial<TestFolderOptions<I, O, E>> = {}): Suite {
 
     const mergedOptions = joinWithDefaultOptions(options);
     let tests: Array<TestFolderSchemaWithFilename<I, O, E>>;

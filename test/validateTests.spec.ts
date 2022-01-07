@@ -13,13 +13,13 @@ describe("Test schema validation", function () {
     const expectingResult: TestFolderSchemaWithFilename<string, number, false> = {
         ...baseTest,
         errorExpected: false,
-        with: -1,
+        expected: -1,
     };
 
     const expectingError: TestFolderSchemaWithFilename<string, number, false> = {
         ...baseTest,
         errorExpected: true,
-        with: false,
+        expected: false,
     };
 
     const omitKey = (o: any, key: string): any => {

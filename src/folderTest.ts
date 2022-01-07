@@ -34,14 +34,14 @@ function folderTest<I, O, E>(suiteName: string,
                         const supplement = test.verbose ? ` with ${result}` : "";
                         return Promise.reject(new Error(`Expected an error but instead resolved or returned${supplement}`));
                     } else if (test.expected !== undefined) {
-                        return mergedOptions.assertOnResult(test.expected as Awaited<O>, result, test.input);
+                        return mergedOptions.assertOnResult(result, test.expected as Awaited<O>, test.input);
                     }
                 } catch (err) {
                     if (!test.errorExpected) {
                         // if we don't want an error just rethrow
                         throw err;
                     } else if (test.expected !== undefined) {
-                        return mergedOptions.assertOnError(test.expected as E, err, test.input);
+                        return mergedOptions.assertOnError(err, test.expected as E, test.input);
                     }
                 }
             });

@@ -141,7 +141,7 @@ interface Options {
 
     // Whether or not to check the JSON for extraneous keys
     // Useful if you are prone to typos
-    //  defaults to false
+    //  defaults to true
     checkForExcessKeys?: boolean;
 }
 

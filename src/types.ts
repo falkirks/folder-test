@@ -18,5 +18,3 @@ export interface TestFolderSchema<I, O, E> {
 export interface TestFolderSchemaWithFilename<I, O, E> extends TestFolderSchema<I, O, E> {
     filename: string;
 }
-
-export type Awaited<O> = O extends Promise<infer T> ? T : O;

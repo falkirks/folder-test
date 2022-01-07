@@ -1,7 +1,7 @@
 import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
 import Log from "./Log";
 
-const legalKeys = new Set(["title", "input", "errorExpected", "verbose", "with", "filename"]);
+const legalKeys = new Set(["title", "input", "errorExpected", "verbose", "expected", "filename"]);
 
 function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>): void {
     if (typeof content.title !== "string") {
@@ -19,11 +19,11 @@ function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>
     if (options.inputValidator && !options.inputValidator(content.input)) {
         throw new Error("input is not valid.");
     }
-    if (typeof content.with !== "undefined") {
-        if (options.outputValidator && !content.errorExpected && !options.outputValidator(content.with)) {
+    if (typeof content.expected !== "undefined") {
+        if (options.outputValidator && !content.errorExpected && !options.outputValidator(content.expected)) {
             throw new Error("output is not valid.");
         }
-        if (options.errorValidator && content.errorExpected && !options.errorValidator(content.with)) {
+        if (options.errorValidator && content.errorExpected && !options.errorValidator(content.expected)) {
             throw new Error("error is not valid.");
         }
     }

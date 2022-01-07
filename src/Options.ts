@@ -1,11 +1,11 @@
 import {expect} from "chai";
 import {TestFolderOptions} from "./types";
 
-function assertOnResult<O>(expected: Awaited<O>, actual: any): void {
+function assertOnResult<O>(actual: any, expected: Awaited<O>): void {
     expect(actual).to.deep.equal(expected);
 }
 
-function assertOnError<E>(expected: E, actual: any): void {
+function assertOnError<E>(actual: any, expected: E): void {
     expect(actual).to.deep.equal(expected);
 }
 

@@ -84,7 +84,7 @@ Assert result
     "b": 0
   },
   "errorExpected": false,
-  "with": 0
+  "expected": 0
 }
 ```
 
@@ -98,7 +98,7 @@ Assert error
     "b": 0
   },
   "errorExpected": true,
-  "with": "YellowError"
+  "expected": "YellowError"
 }
 ```
 
@@ -165,6 +165,6 @@ interface TestFolderSchema<I, O, E> {
 
     // The value that code under test must equal
     //  if absent, will only test that the code under test does/doesn't throw an error
-    with?: O | E;
+    expected?: O | E;
 }
 ```

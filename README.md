@@ -31,7 +31,7 @@ function rgbToNum(rgb: { r: number, g: number, b: number }): number {
 ### Dynamic folder test
 ```typescript
 import { expect } from 'chai'
-import {testFolder} from "@ubccpsc310/folder-test";
+import {folderTest} from "@ubccpsc310/folder-test";
 
 type Input = { r: number, g: number, b: number };
 type Output = number;
@@ -60,7 +60,7 @@ describe("Dynamic folder test", function () {
         }
     }
 
-    testFolder<Input, Output, Error>(
+    folderTest<Input, Output, Error>(
         "rgbToNum tests",                               // suiteName
         (input: Input): Output => rgbToNum(input),      // target
         "./test/resources/json-spec",                   // path
@@ -112,7 +112,7 @@ Assert error
  * @param path - A path where the json schemata are located (includes json schemata in subdirectories)
  * @param options - Described below
  */
-function testFolder<I, O, E>(suiteName: string, target: (input: I) => O, path: string, options: Options) {
+function folderTest<I, O, E>(suiteName: string, target: (input: I) => O, path: string, options: Options) {
     // ...
 }
 
@@ -148,7 +148,7 @@ interface Options {
 /**
  * The schema of the JSON that folder-test will read in the provided directory
  */
-interface TestFolderSchema<I, O, E> {
+interface FolderTestSchema<I, O, E> {
     // The name of the test
     title: string;
 

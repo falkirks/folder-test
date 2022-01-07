@@ -1,4 +1,4 @@
-import {TestFolderSchemaWithFilename} from "./types";
+import {FolderTestSchemaWithFilename} from "./types";
 import Log from "./Log";
 import * as fs from "fs-extra";
 
@@ -41,7 +41,7 @@ function readAllFiles(currentPath: string): string[] {
  */
 function readTestsFromDisk<I, O, E>(path: string): Array<{filename: string}> {
     const methodName = "readTestsFromDisk() --";
-    const testsLoaded: Array<TestFolderSchemaWithFilename<I, O, E>> = [];
+    const testsLoaded: Array<FolderTestSchemaWithFilename<I, O, E>> = [];
     let files: string[];
 
     try {

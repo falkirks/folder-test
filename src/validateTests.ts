@@ -1,9 +1,9 @@
-import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
+import {FolderTestOptions, FolderTestSchemaWithFilename} from "./types";
 import Log from "./Log";
 
 const legalKeys = new Set(["title", "input", "errorExpected", "verbose", "expected", "filename"]);
 
-function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>): void {
+function validateTest<I, O, E>(content: any, options: FolderTestOptions<I, O, E>): void {
     if (typeof content.title !== "string") {
         throw new Error("required property title is missing or is not a string.");
     }
@@ -36,7 +36,7 @@ function validateTest<I, O, E>(content: any, options: TestFolderOptions<I, O, E>
     }
 }
 
-function validateTests<I, O, E>(maybeTests: Array<{ filename: string }>, options: TestFolderOptions<I, O, E>): maybeTests is Array<TestFolderSchemaWithFilename<I, O, E>> {
+function validateTests<I, O, E>(maybeTests: Array<{ filename: string }>, options: FolderTestOptions<I, O, E>): maybeTests is Array<FolderTestSchemaWithFilename<I, O, E>> {
     let badTests = 0;
     for (const maybeTest of maybeTests) {
         try {

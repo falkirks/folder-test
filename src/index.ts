@@ -1,2 +1,2 @@
-import {testFolder} from "./testFolder";
-export {testFolder};
+import {folderTest} from "./folderTest";
+export {folderTest};

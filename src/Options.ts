@@ -13,7 +13,7 @@ function getDefaultOptions<I, O, E>(): TestFolderOptions<I, O, E> {
     return {
         assertOnError,
         assertOnResult,
-        checkForExcessKeys: false,
+        checkForExcessKeys: true,
     };
 }
 

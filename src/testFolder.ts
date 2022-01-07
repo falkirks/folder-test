@@ -1,4 +1,4 @@
-import {Awaited, TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
+import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
 
 import {expect} from "chai";
 import {joinWithDefaultOptions} from "./Options";

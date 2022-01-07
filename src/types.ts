@@ -1,4 +1,4 @@
-export interface TestFolderOptions<I, O, E> {
+export interface FolderTestOptions<I, O, E> {
     assertOnResult: (expected: Awaited<O>, actual: any, input: I) => void | PromiseLike<void>;
     assertOnError: (expected: E, actual: any, input: I) => void | PromiseLike<void>;
     checkForExcessKeys: boolean;
@@ -7,7 +7,7 @@ export interface TestFolderOptions<I, O, E> {
     errorValidator?: (error: any) => error is E;
 }
 
-export interface TestFolderSchema<I, O, E> {
+export interface FolderTestSchema<I, O, E> {
     title: string;
     input: I;
     errorExpected?: boolean;
@@ -15,6 +15,6 @@ export interface TestFolderSchema<I, O, E> {
     expected?: Awaited<O> | E; // if an error is expected this MUST be E otherwise it must be O
 }
 
-export interface TestFolderSchemaWithFilename<I, O, E> extends TestFolderSchema<I, O, E> {
+export interface FolderTestSchemaWithFilename<I, O, E> extends FolderTestSchema<I, O, E> {
     filename: string;
 }

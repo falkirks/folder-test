@@ -1,22 +1,22 @@
-import {TestFolderSchemaWithFilename} from "../src/types";
+import {FolderTestSchemaWithFilename} from "../src/types";
 import {validateTests} from "../src/validateTests";
 import {getDefaultOptions, joinWithDefaultOptions} from "../src/Options";
 import {expect} from "chai";
 
 describe("Test schema validation", function () {
-    const baseTest: TestFolderSchemaWithFilename<string, number, false> = {
+    const baseTest: FolderTestSchemaWithFilename<string, number, false> = {
         input: "input",
         title: "test",
         filename: "test.json",
     };
 
-    const expectingResult: TestFolderSchemaWithFilename<string, number, false> = {
+    const expectingResult: FolderTestSchemaWithFilename<string, number, false> = {
         ...baseTest,
         errorExpected: false,
         expected: -1,
     };
 
-    const expectingError: TestFolderSchemaWithFilename<string, number, false> = {
+    const expectingError: FolderTestSchemaWithFilename<string, number, false> = {
         ...baseTest,
         errorExpected: true,
         expected: false,

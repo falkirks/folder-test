@@ -1,4 +1,4 @@
-import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
+import {FolderTestOptions, FolderTestSchemaWithFilename} from "./types";
 
 import {expect} from "chai";
 import {joinWithDefaultOptions} from "./Options";
@@ -6,13 +6,13 @@ import {readTestsFromDisk} from "./readTestsFromDisk";
 import {validateTests} from "./validateTests";
 import {Suite} from "mocha";
 
-function testFolder<I, O, E>(suiteName: string,
+function folderTest<I, O, E>(suiteName: string,
                              target: (input: I) => O,
                              folder: string,
-                             options: Partial<TestFolderOptions<I, O, E>> = {}): Suite {
+                             options: Partial<FolderTestOptions<I, O, E>> = {}): Suite {
 
     const mergedOptions = joinWithDefaultOptions(options);
-    let tests: Array<TestFolderSchemaWithFilename<I, O, E>>;
+    let tests: Array<FolderTestSchemaWithFilename<I, O, E>>;
     try {
         const maybeTests = readTestsFromDisk(folder);
         if (validateTests(maybeTests, mergedOptions)) {
@@ -49,4 +49,4 @@ function testFolder<I, O, E>(suiteName: string,
     });
 }
 
-export {testFolder};
+export {folderTest};

@@ -1,25 +1,25 @@
-import {TestFolderSchemaWithFilename} from "../src/types";
+import {FolderTestSchemaWithFilename} from "../src/types";
 import {validateTests} from "../src/validateTests";
 import {getDefaultOptions, joinWithDefaultOptions} from "../src/Options";
 import {expect} from "chai";
 
 describe("Test schema validation", function () {
-    const baseTest: TestFolderSchemaWithFilename<string, number, false> = {
+    const baseTest: FolderTestSchemaWithFilename<string, number, false> = {
         input: "input",
         title: "test",
         filename: "test.json",
     };
 
-    const expectingResult: TestFolderSchemaWithFilename<string, number, false> = {
+    const expectingResult: FolderTestSchemaWithFilename<string, number, false> = {
         ...baseTest,
         errorExpected: false,
-        with: -1,
+        expected: -1,
     };
 
-    const expectingError: TestFolderSchemaWithFilename<string, number, false> = {
+    const expectingError: FolderTestSchemaWithFilename<string, number, false> = {
         ...baseTest,
         errorExpected: true,
-        with: false,
+        expected: false,
     };
 
     const omitKey = (o: any, key: string): any => {
@@ -102,12 +102,12 @@ describe("Test schema validation", function () {
     it("should error given an extraneous key if check is enabled", function () {
         expect(() => {
             const test = {...baseTest, foo: "bar"};
-            validateTests([test], joinWithDefaultOptions({checkForExcessKeys: true}));
+            validateTests([test], getDefaultOptions());
         }).to.throw;
     });
 
     it("should not error given an extraneous key if check is disabled", function () {
         const test = {...baseTest, foo: "bar"};
-        validateTests([test], getDefaultOptions());
+        validateTests([test], joinWithDefaultOptions({checkForExcessKeys: false}));
     });
 });

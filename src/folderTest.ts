@@ -1,18 +1,18 @@
-import {TestFolderOptions, TestFolderSchemaWithFilename} from "./types";
+import {FolderTestOptions, FolderTestSchemaWithFilename} from "./types";
 
 import {expect} from "chai";
 import {joinWithDefaultOptions} from "./Options";
 import {readTestsFromDisk} from "./readTestsFromDisk";
 import {validateTests} from "./validateTests";
-import {ISuite} from "mocha";
+import {Suite} from "mocha";
 
-function testFolder<I, O, E>(suiteName: string,
-                             target: (input: I) => O | PromiseLike<O>,
+function folderTest<I, O, E>(suiteName: string,
+                             target: (input: I) => O,
                              folder: string,
-                             options: Partial<TestFolderOptions<I, O, E>> = {}): ISuite {
+                             options: Partial<FolderTestOptions<I, O, E>> = {}): Suite {
 
     const mergedOptions = joinWithDefaultOptions(options);
-    let tests: Array<TestFolderSchemaWithFilename<I, O, E>>;
+    let tests: Array<FolderTestSchemaWithFilename<I, O, E>>;
     try {
         const maybeTests = readTestsFromDisk(folder);
         if (validateTests(maybeTests, mergedOptions)) {
@@ -33,15 +33,15 @@ function testFolder<I, O, E>(suiteName: string,
                         // if we want an error just reject again
                         const supplement = test.verbose ? ` with ${result}` : "";
                         return Promise.reject(new Error(`Expected an error but instead resolved or returned${supplement}`));
-                    } else if (test.with !== undefined) {
-                        return mergedOptions.assertOnResult(test.with as O, result, test.input);
+                    } else if (test.expected !== undefined) {
+                        return mergedOptions.assertOnResult(result, test.expected as Awaited<O>, test.input);
                     }
                 } catch (err) {
                     if (!test.errorExpected) {
                         // if we don't want an error just rethrow
                         throw err;
-                    } else if (test.with !== undefined) {
-                        return mergedOptions.assertOnError(test.with as E, err, test.input);
+                    } else if (test.expected !== undefined) {
+                        return mergedOptions.assertOnError(err, test.expected as E, test.input);
                     }
                 }
             });
@@ -49,4 +49,4 @@ function testFolder<I, O, E>(suiteName: string,
     });
 }
 
-export {testFolder};
+export {folderTest};

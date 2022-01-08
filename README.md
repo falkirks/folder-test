@@ -31,7 +31,7 @@ function rgbToNum(rgb: { r: number, g: number, b: number }): number {
 ### Dynamic folder test
 ```typescript
 import { expect } from 'chai'
-import {testFolder} from "@ubccpsc310/folder-test";
+import {folderTest} from "@ubccpsc310/folder-test";
 
 type Input = { r: number, g: number, b: number };
 type Output = number;
@@ -47,12 +47,12 @@ describe("Dynamic folder test", function () {
     });
     
     // Assert value equals expected
-    function assertResult(expected: Output, actual: any): void {
+    function assertResult(actual: any, expected: Output): void {
         expect(actual).to.equal(expected);
     }
 
     // Assert actual error is of expected type
-    function assertError(expected: Error, actual: any): void {
+    function assertError(actual: any, expected: Error): void {
         if (expected === "RedError") {
             expect(actual).to.be.an.instanceOf(RedError);
         } else {
@@ -60,7 +60,7 @@ describe("Dynamic folder test", function () {
         }
     }
 
-    testFolder<Input, Output, Error>(
+    folderTest<Input, Output, Error>(
         "rgbToNum tests",                               // suiteName
         (input: Input): Output => rgbToNum(input),      // target
         "./test/resources/json-spec",                   // path
@@ -84,7 +84,7 @@ Assert result
     "b": 0
   },
   "errorExpected": false,
-  "with": 0
+  "expected": 0
 }
 ```
 
@@ -98,7 +98,7 @@ Assert error
     "b": 0
   },
   "errorExpected": true,
-  "with": "YellowError"
+  "expected": "YellowError"
 }
 ```
 
@@ -108,12 +108,11 @@ Assert error
  * The main function!
  * @param suiteName - Name of the mocha describe that will be created 
  * @param target - A function that invokes the code under test and returns the result
- *          or a promise that resolves to the result
  *          if target returns a promise, it is resolved before the result is passed to `assertOnResult` function
  * @param path - A path where the json schemata are located (includes json schemata in subdirectories)
  * @param options - Described below
  */
-function testFolder<I, O, E>(suiteName: string, target: (input: I) => O | PromiseLike<O>, path: string, options: Options) {
+function folderTest<I, O, E>(suiteName: string, target: (input: I) => O, path: string, options: Options) {
     // ...
 }
 
@@ -121,12 +120,12 @@ interface Options {
     // The function that will be called on the result of the code under test
     // if errorExpected is false and the code under test does not throw
     //  if absent, defaults to `expect(actual).to.deep.equal(expected)`
-    assertOnResult?: (expected: O, actual: any, input: I) => void | PromiseLike<void>;
+    assertOnResult?: (actual: any, expected: Awaited<O>, input: I) => void | PromiseLike<void>;
 
     // The function that will be called on the result of the code under test
     // if errorExpected is true and the code under test throws
     //  if absent, defaults to `expect(actual).to.deep.equal(expected)`
-    assertOnError?: (expected: E, actual: any, input: I) => void | PromiseLike<void>;
+    assertOnError?: (actual: any, expected: E, input: I) => void | PromiseLike<void>;
 
     // Called on the JSON files to ensure that the inputs are "correct" as specified this function
     //  if absent, the inputs are not validated
@@ -142,14 +141,14 @@ interface Options {
 
     // Whether or not to check the JSON for extraneous keys
     // Useful if you are prone to typos
-    //  defaults to false
+    //  defaults to true
     checkForExcessKeys?: boolean;
 }
 
 /**
  * The schema of the JSON that folder-test will read in the provided directory
  */
-interface TestFolderSchema<I, O, E> {
+interface FolderTestSchema<I, O, E> {
     // The name of the test
     title: string;
 
@@ -166,6 +165,6 @@ interface TestFolderSchema<I, O, E> {
 
     // The value that code under test must equal
     //  if absent, will only test that the code under test does/doesn't throw an error
-    with?: O | E;
+    expected?: O | E;
 }
 ```

@@ -165,6 +165,6 @@ interface FolderTestSchema<I, O, E> {
 
     // The value that code under test must equal
     //  if absent, will only test that the code under test does/doesn't throw an error
-    expected?: O | E;
+    expected?: Awaited<O> | E;
 }
 ```

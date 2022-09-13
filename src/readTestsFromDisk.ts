@@ -28,7 +28,7 @@ function readAllFiles(currentPath: string): string[] {
         const fullPath = `${currentPath}/${fileOrDirName}`;
         if (isDirectory(fullPath)) {
             filePaths = filePaths.concat(readAllFiles(fullPath));
-        } else if (fileOrDirName.endsWith(".json")) {
+        } else if (/\.json$/i.test(fileOrDirName)) {
             filePaths.push(fullPath);
         }
     }

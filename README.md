@@ -1,5 +1,13 @@
 # Folder Test
 
+Folder test is a package for dynamically generating batches of tests from external JSON files.
+
+## Usage
+
+1. Create a directory containing one JSON file for each test you wish to generate. These files must conform to the `FolderTestSchema` described in the [API](#api).
+1. Invoke `folderTest` from your test suite.
+1. Run your test suite.
+
 ## Installation
 
 ```console
@@ -146,7 +154,8 @@ interface Options {
 }
 
 /**
- * The schema of the JSON that folder-test will read in the provided directory
+ * The schema of the JSON that folder-test will read in the provided directory.
+ * These files must have the `.json` extension.
  */
 interface FolderTestSchema<I, O, E> {
     // The name of the test

@@ -7,7 +7,7 @@ import {validateTests} from "./validateTests";
 import {Suite} from "mocha";
 
 function folderTest<I, O, E>(suiteName: string,
-                             target: (input: I) => O,
+                             target: (input: I) => unknown,
                              folder: string,
                              options: Partial<FolderTestOptions<I, O, E>> = {}): Suite {
 
@@ -34,7 +34,7 @@ function folderTest<I, O, E>(suiteName: string,
                         const supplement = test.verbose ? ` with ${result}` : "";
                         return Promise.reject(new Error(`Expected an error but instead resolved or returned${supplement}`));
                     } else if (test.expected !== undefined) {
-                        return mergedOptions.assertOnResult(result, test.expected as Awaited<O>, test.input);
+                        return mergedOptions.assertOnResult(result, test.expected as O, test.input);
                     }
                 } catch (err) {
                     if (!test.errorExpected) {

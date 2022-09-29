@@ -120,7 +120,7 @@ Assert error
  * @param path - A path where the json schemata are located (includes json schemata in subdirectories)
  * @param options - Described below
  */
-function folderTest<I, O, E>(suiteName: string, target: (input: I) => O, path: string, options: Options) {
+function folderTest<I, O, E>(suiteName: string, target: (input: I) => unknown, path: string, options: Options) {
     // ...
 }
 
@@ -128,7 +128,7 @@ interface Options {
     // The function that will be called on the result of the code under test
     // if errorExpected is false and the code under test does not throw
     //  if absent, only asserts that the code under test does not throw
-    assertOnResult?: (actual: any, expected: Awaited<O>, input: I) => void | PromiseLike<void>;
+    assertOnResult?: (actual: any, expected: O, input: I) => void | PromiseLike<void>;
 
     // The function that will be called on the result of the code under test
     // if errorExpected is true and the code under test throws
@@ -174,6 +174,6 @@ interface FolderTestSchema<I, O, E> {
 
     // The value that code under test must equal
     //  if absent, will only test that the code under test does/doesn't throw an error
-    expected?: Awaited<O> | E;
+    expected?: O | E;
 }
 ```

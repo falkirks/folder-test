@@ -127,12 +127,12 @@ function folderTest<I, O, E>(suiteName: string, target: (input: I) => O, path: s
 interface Options {
     // The function that will be called on the result of the code under test
     // if errorExpected is false and the code under test does not throw
-    //  if absent, defaults to `expect(actual).to.deep.equal(expected)`
+    //  if absent, only asserts that the code under test does not throw
     assertOnResult?: (actual: any, expected: Awaited<O>, input: I) => void | PromiseLike<void>;
 
     // The function that will be called on the result of the code under test
     // if errorExpected is true and the code under test throws
-    //  if absent, defaults to `expect(actual).to.deep.equal(expected)`
+    //  if absent, only asserts that the code under test throws
     assertOnError?: (actual: any, expected: E, input: I) => void | PromiseLike<void>;
 
     // Called on the JSON files to ensure that the inputs are "correct" as specified this function

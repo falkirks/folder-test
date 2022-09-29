@@ -55,12 +55,12 @@ describe("Dynamic folder test", function () {
     });
     
     // Assert value equals expected
-    function assertResult(actual: any, expected: Output): void {
+    function assertResult(actual: unknown, expected: Output): void {
         expect(actual).to.equal(expected);
     }
 
     // Assert actual error is of expected type
-    function assertError(actual: any, expected: Error): void {
+    function assertError(actual: unknown, expected: Error): void {
         if (expected === "RedError") {
             expect(actual).to.be.an.instanceOf(RedError);
         } else {
@@ -128,24 +128,24 @@ interface Options {
     // The function that will be called on the result of the code under test
     // if errorExpected is false and the code under test does not throw
     //  if absent, only asserts that the code under test does not throw
-    assertOnResult?: (actual: any, expected: O, input: I) => void | PromiseLike<void>;
+    assertOnResult?: (actual: unknown, expected: O, input: I) => void | PromiseLike<void>;
 
     // The function that will be called on the result of the code under test
     // if errorExpected is true and the code under test throws
     //  if absent, only asserts that the code under test throws
-    assertOnError?: (actual: any, expected: E, input: I) => void | PromiseLike<void>;
+    assertOnError?: (actual: unknown, expected: E, input: I) => void | PromiseLike<void>;
 
     // Called on the JSON files to ensure that the inputs are "correct" as specified this function
     //  if absent, the inputs are not validated
-    inputValidator?: (input: any) => input is I;
+    inputValidator?: (input: unknown) => input is I;
 
     // Called on the JSON files to ensure that the outputs are "correct" as specified this function
     //  if absent, the outputs are not validated
-    outputValidator?: (output: any) => output is O;
+    outputValidator?: (output: unknown) => output is O;
 
     // Called on the JSON files to ensure that the errors are "correct" as specified this function
     //  if absent, the errors are not validated
-    errorValidator?: (error: any) => error is E;
+    errorValidator?: (error: unknown) => error is E;
 
     // Whether or not to check the JSON for extraneous keys
     // Useful if you are prone to typos

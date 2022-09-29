@@ -1,10 +1,10 @@
 export interface FolderTestOptions<I, O, E> {
-    assertOnResult: (actual: any, expected: O, input: I) => void | PromiseLike<void>;
-    assertOnError: (actual: any, expected: E, input: I) => void | PromiseLike<void>;
+    assertOnResult: (actual: unknown, expected: O, input: I) => void | PromiseLike<void>;
+    assertOnError: (actual: unknown, expected: E, input: I) => void | PromiseLike<void>;
     checkForExcessKeys: boolean;
-    inputValidator?: (input: any) => input is I;
-    outputValidator?: (output: any) => output is O;
-    errorValidator?: (error: any) => error is E;
+    inputValidator?: (input: unknown) => input is I;
+    outputValidator?: (output: unknown) => output is O;
+    errorValidator?: (error: unknown) => error is E;
 }
 
 export interface FolderTestSchema<I, O, E> {

@@ -7,7 +7,7 @@
         "Braxton Hall"
     ],
     "license": "GPL-3.0",
-    "version": "2.0.1",
+    "version": "3.0.0",
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "engines": {
@@ -21,6 +21,7 @@
         "@typescript-eslint/eslint-plugin": "5.9.0",
         "@typescript-eslint/eslint-plugin-tslint": "5.9.0",
         "@typescript-eslint/parser": "5.9.0",
+        "chai": "4.3.4",
         "eslint": "8.6.0",
         "nyc": "15.1.0",
         "ts-node": "10.2.1",
@@ -28,7 +29,6 @@
         "typescript": "4.5.4"
     },
     "dependencies": {
-        "chai": "4.3.4",
         "fs-extra": "10.0.0",
         "mocha": "9.1.0"
     },

@@ -1,13 +1,17 @@
 {
     "name": "@ubccpsc310/folder-test",
     "description": "Load many tests from a folder",
-    "homepage": "https://github.com/falkirks/folder-test",
+    "homepage": "https://github.com/ubccpsc310/folder-test",
     "contributors": [
         "Noa Heyl",
         "Braxton Hall"
     ],
     "license": "GPL-3.0",
-    "version": "3.0.0",
+    "version": "3.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:ubccpsc310/folder-test.git"
+    },
     "main": "build/index.js",
     "types": "build/index.d.ts",
     "engines": {
